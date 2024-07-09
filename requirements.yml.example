@@ -1,0 +1,8 @@
+---
+collections:
+  - name: community.general
+
+roles:
+  - name: asdf
+    src: https://github.com/pythoninthegrass/ansible-role-asdf.git
+    version: master

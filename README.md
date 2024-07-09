@@ -1,12 +1,31 @@
-[![Build Status](https://travis-ci.org/cimon-io/ansible-role-asdf.svg?branch=master)](https://travis-ci.org/cimon-io/ansible-role-asdf)
+# Ansible asdf role
 
-# Ansible ASDF role
-
-An Ansible Role that installs [asdf](https://github.com/asdf-vm/asdf.git) version manager with plugins.
+An Ansible role that installs [asdf](https://github.com/asdf-vm/asdf.git) version manager with plugins.
 
 ## Requirements
 
 None
+
+## Install
+
+Create a `requirements.yml` file in your ansible project with the following content:
+
+```yaml
+---
+collections:
+  - name: community.general
+
+roles:
+  - name: asdf
+    src: https://github.com/pythoninthegrass/ansible-role-asdf.git
+    version: master
+```
+
+Then run the following command:
+
+```bash
+ansible-galaxy install -r requirements.yml
+```
 
 ## Role Variables
 
@@ -72,7 +91,7 @@ Playbook example is given below:
 ```yaml
 - hosts: web
   roles:
-  - role: ansible-role-asdf
+  - role: asdf
     asdf_plugins:
     - name: "erlang"
       versions: ["18.3", "20.1"]
