@@ -1,0 +1,58 @@
+FROM ubuntu:20.04
+
+ARG ANSIBLE_VERSION="6.7.0"
+ARG ANSIBLE_LINT_VERSION="6.13.1"
+ARG PLAYBOOK_FILE="golang.yml"
+ARG PLUGIN_EXEC="go version"
+ENV PLAYBOOK_FILE=${PLAYBOOK_FILE}
+ENV PLUGIN_EXEC=${PLUGIN_EXEC}
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update -qq \
+    && apt-get install -qq --no-install-recommends -y \
+        git \
+        libffi-dev \
+        libssl-dev \
+        procps \
+        python \
+        python3-apt \
+        python3-dev \
+        python3-pip \
+        python3-pycurl \
+        sudo \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ENV PIP_NO_CACHE_DIR=off
+ENV PIP_DISABLE_PIP_VERSION_CHECK=on
+ENV PIP_DEFAULT_TIMEOUT=100
+
+RUN python3 -m pip install -U setuptools \
+    && python3 -m pip install -q \
+        ansible==$ANSIBLE_VERSION \
+        ansible-lint==$ANSIBLE_LINT_VERSION
+
+WORKDIR /ansible-role-asdf
+
+COPY  . .
+
+ARG USER_NAME=deploy
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USER_NAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USER_NAME \
+    && mkdir -p /etc/sudoers.d \
+    && echo $USER_NAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USER_NAME \
+    && chmod 0440 /etc/sudoers.d/$USER_NAME
+
+# standardise on locale, don't generate .pyc, enable tracebacks on seg faults
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONFAULTHANDLER 1
+
+USER ${USER_NAME}
+
+CMD [ "./tests/entrypoint.sh" ]

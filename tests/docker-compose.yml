@@ -1,0 +1,12 @@
+services:
+  ansible-role-asdf:
+    container_name: asdf-role-ubuntu
+    image: asdf-role-ubuntu
+    tty: true         # false for `entrypoint` in Dockerfile
+    stdin_open: true  # false for `entrypoint` in Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu2004
+    volumes:
+      - "../:/ansible-role-asdf"
+    working_dir: /ansible-role-asdf
