@@ -1,0 +1,47 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+  "name": "Dev Environment",
+  // "build": {
+  //   "dockerfile": "../tests/Dockerfile.ubuntu2004"
+  // },
+  "service": "ansible-role-asdf",
+  "workspaceFolder": "/ansible-role-asdf",
+  "dockerComposeFile": "../tests/docker-compose.yml",
+  "overrideCommand": true,
+  "shutdownAction": "stopCompose",
+  // "shutdownAction": "stopContainer",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/usr/bin/bash"
+          }
+        }
+      },
+      "extensions": [
+        "aaron-bond.better-comments",
+        "codezombiech.gitignore",
+        "eamodio.gitlens",
+        "EditorConfig.EditorConfig",
+        "foxundermoon.shell-format",
+        "GitHub.copilot-chat",
+        "GitHub.copilot",
+        "jetpack-io.devbox",
+        "mads-hartmann.bash-ide-vscode",
+        "mechatroner.rainbow-csv",
+        "ms-azuretools.vscode-docker",
+        "ms-python.python",
+        "ms-vscode.atom-keybindings",
+        "ms-vsliveshare.vsliveshare",
+        "redhat.ansible",
+        "redhat.vscode-yaml",
+        "ryu1kn.partial-diff",
+        "timonwong.shellcheck",
+        "yzhang.markdown-all-in-one"
+      ]
+    }
+  }
+}
