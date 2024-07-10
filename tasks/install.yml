@@ -34,8 +34,8 @@
 - name: "install asdf global dependencies with apt"
   apt:
     name: "{{ asdf_apt_global_dependencies }}"
+    update_cache: yes
     install_recommends: no
-    cache_valid_time: "{{ apt_cache_valid_time }}"
   become: True
   retries: "{{ remote_package_retries }}"
   register: apt_deps_result
@@ -45,6 +45,7 @@
 - name: "install asdf global dependencies with yum"
   yum:
     name: "{{ asdf_yum_global_dependencies }}"
+    update_cache: yes
   become: True
   retries: "{{ remote_package_retries }}"
   register: yum_deps_result

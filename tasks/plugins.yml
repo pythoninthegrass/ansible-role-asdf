@@ -2,8 +2,8 @@
 - name: "install plugin dependencies with apt"
   apt:
     name: "{{ asdf_apt_optional_dependencies }}"
+    update_cache: yes
     install_recommends: no
-    cache_valid_time: "{{ apt_cache_valid_time }}"
   retries: "{{ remote_package_retries }}"
   register: apt_result
   until: apt_result is succeeded
@@ -13,6 +13,7 @@
 - name: "install plugin dependencies with yum"
   yum:
     name: "{{ asdf_yum_optional_dependencies }}"
+    update_cache: yes
   retries: "{{ remote_package_retries }}"
   register: yum_result
   until: yum_result is succeeded
