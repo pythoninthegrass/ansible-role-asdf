@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM python:3.11.9-slim-bookworm
 
 # TODO: multistage build
 
@@ -13,17 +13,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -qq \
     && apt-get install -qq --no-install-recommends -y \
-        gcc \
         git \
-        libffi-dev \
-        libpq-dev \
-        libssl-dev \
-        procps \
-        python \
-        python3-apt \
-        python3-dev \
-        python3-pip \
-        python3-pycurl \
         sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -32,7 +22,10 @@ ENV PIP_NO_CACHE_DIR=off
 ENV PIP_DISABLE_PIP_VERSION_CHECK=on
 ENV PIP_DEFAULT_TIMEOUT=100
 
-RUN python3 -m pip install -q -U setuptools  \
+RUN python3 -m pip install -q -U pip \
+    && python3 -m pip install -U setuptools
+
+RUN python3 -m pip install -q -U cryptography \
     && python3 -m pip install -q \
         ansible==$ANSIBLE_VERSION \
         ansible-lint==$ANSIBLE_LINT_VERSION
