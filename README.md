@@ -139,6 +139,11 @@ Installing asdf into a shared directory accessible to the `developers` group:
     - asdf
 ```
 
+## TODO
+
+* [Issues](https://github.com/pythoninthegrass/ansible-role-asdf/issues)
+* Convert tests to [molecule](https://ansible.readthedocs.io/projects/molecule/getting-started/)
+
 ## License
 
 Licensed under the [MIT License](https://opensource.org/licenses/MIT).
