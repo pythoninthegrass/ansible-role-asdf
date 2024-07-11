@@ -6,7 +6,7 @@ services:
     stdin_open: true  # false for `entrypoint` in Dockerfile
     build:
       context: .
-      dockerfile: Dockerfile.ubuntu2004
+      dockerfile: Dockerfile.debian12
     volumes:
       - "../:/ansible-role-asdf"
     working_dir: /ansible-role-asdf
