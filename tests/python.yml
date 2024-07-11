@@ -4,4 +4,4 @@
     - role: ansible-role-asdf
       asdf_plugins:
         - name: "python"
-          versions: ["3.11.9"]
+          versions: ["3.12.4"]
