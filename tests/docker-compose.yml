@@ -2,8 +2,9 @@ services:
   ansible-role-asdf:
     container_name: asdf-role-ubuntu
     image: asdf-role-ubuntu
-    tty: true         # false for `entrypoint` in Dockerfile
-    stdin_open: true  # false for `entrypoint` in Dockerfile
+    platform: linux/arm64/v8  # linux/amd64 / linux/arm64/v8
+    tty: true                 # false for `entrypoint` in Dockerfile
+    stdin_open: true          # false for `entrypoint` in Dockerfile
     build:
       context: .
       dockerfile: Dockerfile.debian12

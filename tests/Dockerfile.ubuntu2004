@@ -59,8 +59,8 @@ ARG USER_NAME=deploy
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-ENV PLAYBOOK_FILE="golang.yml"
-ENV PLUGIN_EXEC="go version"
+ARG PLAYBOOK_FILE="golang.yml"
+ARG PLUGIN_EXEC="go version"
 
 ARG PYTHON_VERSION="3.11"
 ENV VENV_PATH=/opt/venv
@@ -74,34 +74,21 @@ ENV PYTHONFAULTHANDLER=1
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN rm -f /etc/apt/apt.conf.d/docker-clean
-
-RUN --mount=type=cache,target=/var/cache/apt \
-    apt-get update -qq \
+# TODO: run test w/python
+RUN apt-get update -qq \
     && apt-get install -qq --no-install-recommends -y \
-        build-essential \
+        apt-utils \
         ca-certificates \
-        curl \
         git \
-        libbz2-dev \
-        libffi-dev \
-        liblzma-dev \
-        libncursesw5-dev \
-        libreadline-dev \
-        libsqlite3-dev \
-        libssl-dev \
-        libxml2-dev \
-        libxmlsec1-dev \
-        make \
         sudo \
-        tk-dev \
-        wget \
-        xz-utils \
-        zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+WORKDIR /ansible-role-asdf
+
 COPY --from=builder $VENV_PATH $VENV_PATH
+COPY . .
+
 COPY --from=builder /usr/bin/python${PYTHON_VERSION} \
     /usr/bin/python${PYTHON_VERSION}
 COPY --from=builder /usr/lib/python$PYTHON_VERSION \
@@ -109,7 +96,6 @@ COPY --from=builder /usr/lib/python$PYTHON_VERSION \
 COPY --from=builder /usr/lib/python$PYTHON_VERSION/lib-dynload \
     /usr/lib/python$PYTHON_VERSION/lib-dynload
 COPY --from=builder /ansible-role-asdf /ansible-role-asdf
-
 RUN ln -s /usr/bin/python${PYTHON_VERSION} /usr/bin/python3 \
     && ln -s /usr/bin/python${PYTHON_VERSION} /usr/bin/python
 
@@ -118,8 +104,6 @@ RUN groupadd --gid $USER_GID $USER_NAME \
     && mkdir -p /etc/sudoers.d \
     && echo "$USER_NAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$USER_NAME \
     && chmod 0440 /etc/sudoers.d/$USER_NAME
-
-WORKDIR /ansible-role-asdf
 
 USER $USER_NAME
 

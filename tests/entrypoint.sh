@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+trap 'exit 0' EXIT SIGINT SIGHUP SIGTERM
+
 export HOSTS="${HOSTS:-localhost,}"
 export VERBOSE="${VERBOSE:-False}"
+export PLAYBOOK_FILE="${PLAYBOOK_FILE?}"
+export PLUGIN_EXEC="${PLUGIN_EXEC?}"
 export PATH="$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
 
 if [ "$PLUGIN_EXEC" = 'go version' ]; then

@@ -32,8 +32,6 @@ FROM python:${PYTHON_VERSION}-slim-bookworm as runner
 
 ARG PLAYBOOK_FILE="golang.yml"
 ARG PLUGIN_EXEC="go version"
-ENV PLAYBOOK_FILE=${PLAYBOOK_FILE}
-ENV PLUGIN_EXEC=${PLUGIN_EXEC}
 
 ARG USER_NAME=deploy
 ARG USER_UID=1000
@@ -41,11 +39,10 @@ ARG USER_GID=$USER_UID
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN rm -f /etc/apt/apt.conf.d/docker-clean
-
-RUN --mount=type=cache,target=/var/cache/apt \
-    apt-get update -qq \
+RUN apt-get update -qq \
     && apt-get install -qq --no-install-recommends -y \
+        apt-utils \
+        ca-certificates \
         git \
         sudo \
     && apt-get clean \
@@ -57,7 +54,7 @@ ENV VENV_PATH=/opt/venv
 ENV PATH="$VENV_PATH/bin:$PATH"
 
 COPY --from=builder $VENV_PATH $VENV_PATH
-COPY --from=builder /ansible-role-asdf .
+COPY . .
 
 RUN groupadd --gid $USER_GID $USER_NAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USER_NAME \
