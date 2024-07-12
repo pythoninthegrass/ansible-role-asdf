@@ -40,10 +40,10 @@ tasks:
     cmds:
       - |
         case {{.CLI_ARGS}} in
-          "debian"|"")
+          debian|"")
             {{.BUILD}} build {{.DOCKERFILE}} {{.SERVICE}}
             ;;
-          "ubuntu")
+          ubuntu)
             {{.BUILD}} build {{.TLD}}/tests/Dockerfile.ubuntu2004 "ansible-role-ubuntu"
             ;;
           *)

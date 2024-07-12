@@ -27,7 +27,7 @@ build() {
 		docker buildx build \
 			--platform="${PLATFORM}" \
 			-f "${FILENAME}" \
-			-t "docker.io/library/${SERVICE}" \
+			-t "${SERVICE}" \
 			--load .
 	else
 		docker buildx build \
