@@ -72,7 +72,8 @@
   template:
     src: "asdf.sh.j2"
     dest: "{{ asdf_script }}"
-    owner: "root"
-    group: "root"
+    owner: "{{ asdf_user }}"
+    group: "{{ asdf_group }}"
     mode: 0755
   become: True
+  become_user: "{{ asdf_user }}"
