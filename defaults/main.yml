@@ -18,25 +18,11 @@ asdf_plugins: []
 #     global: 20.1
 
 asdf_apt_global_dependencies:
-  - "build-essential"
   - "ca-certificates"
   - "curl"
   - "git"
-  - "libbz2-dev"
-  - "libffi-dev"
-  - "liblzma-dev"
-  - "libncursesw5-dev"
-  - "libreadline-dev"
-  - "libsqlite3-dev"
-  - "libssl-dev"
-  - "libxml2-dev"
-  - "libxmlsec1-dev"
-  - "make"
   - "sudo"
-  - "tk-dev"
   - "wget"
-  - "xz-utils"
-  - "zlib1g-dev"
 
 asdf_yum_global_dependencies:
   - "bzip2-devel"
@@ -85,6 +71,27 @@ asdf_apt_nodejs_dependencies:
 asdf_yum_nodejs_dependencies:
   - "gpg"
   - "perl-Digest-SHA"
+
+asdf_apt_python_dependencies:
+  - "build-essential"
+  - "libbz2-dev"
+  - "libffi-dev"
+  - "liblzma-dev"
+  - "libncursesw5-dev"
+  - "libreadline-dev"
+  - "libsqlite3-dev"
+  - "libssl-dev"
+  - "libxml2-dev"
+  - "libxmlsec1-dev"
+  - "llvm"
+  - "make"
+  - "tk-dev"
+  - "xz-utils"
+  - "zlib1g-dev"
+
+asdf_yum_python_dependencies:
+  - "bzip2-devel"
+  - "libsqlite3x-devel"
 
 asdf_apt_php_dependencies:
   - "gettext"
