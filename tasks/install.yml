@@ -71,7 +71,7 @@
 - name: "source asdf script"
   template:
     src: "asdf.sh.j2"
-    dest: "/etc/profile.d/asdf.sh"
+    dest: "{{ asdf_script }}"
     owner: "root"
     group: "root"
     mode: 0755
