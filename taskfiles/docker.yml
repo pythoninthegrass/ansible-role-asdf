@@ -40,16 +40,16 @@ tasks:
     cmds:
       - |
         case {{.CLI_ARGS}} in
-            "debian"|"")
-              {{.BUILD}} build {{.DOCKERFILE}} {{.SERVICE}}
-              ;;
-            "ubuntu")
-              {{.BUILD}} build {{.TLD}}/tests/Dockerfile.ubuntu2004 "ansible-role-ubuntu"
-              ;;
-            *)
-              echo "Invalid dockerfile"
-              ;;
-          esac
+          "debian"|"")
+            {{.BUILD}} build {{.DOCKERFILE}} {{.SERVICE}}
+            ;;
+          "ubuntu")
+            {{.BUILD}} build {{.TLD}}/tests/Dockerfile.ubuntu2004 "ansible-role-ubuntu"
+            ;;
+          *)
+            echo "Invalid dockerfile"
+            ;;
+        esac
     env:
       DOCKER_BUILDKIT: "1"
 
