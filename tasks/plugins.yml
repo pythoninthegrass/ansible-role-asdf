@@ -21,8 +21,10 @@
   when: ansible_os_family == "RedHat"
 
 - name: "install plugins"
-  command: "bash -lc 'source {{ asdf_script }} && asdf plugin-add {{ item.name }} {{ item.repository | default() }}'"
+  shell:
+    source {{ asdf_script }} && asdf plugin-add {{ item.name }} {{ item.repository | default() }}
   args:
+    executable: bash
     creates: "{{ asdf_dir }}/plugins/{{ item.name }}"
   with_items: "{{ asdf_plugins }}"
   when: asdf_plugins | length > 0
@@ -56,8 +58,10 @@
   with_items: "{{ asdf_plugins }}"
 
 - name: "install apps"
-  command: "bash -lc 'source {{ asdf_script }} && asdf install {{ item.0.name }} {{ item.1 }}'"
+  shell:
+    source {{ asdf_script }} && asdf install {{ item.0.name }} {{ item.1 }}
   args:
+    executable: bash
     creates: "{{ asdf_dir }}/installs/{{ item.0.name }}/{{ item.1 }}"
   with_subelements:
     - "{{ asdf_plugins }}"
@@ -69,8 +73,10 @@
   become_user: "{{ asdf_user }}"
 
 - name: "uninstall apps"
-  command: "bash -lc 'source {{ asdf_script }} && asdf uninstall {{ item.0.name }} {{ item.1 }}'"
+  shell:
+    source {{ asdf_script }} && asdf uninstall {{ item.0.name }} {{ item.1 }}
   args:
+    executable: bash
     removes: "{{ asdf_dir }}/installs/{{ item.0.name }}/{{ item.1 }}"
   with_subelements:
     - "{{ asdf_plugins }}"
@@ -82,7 +88,10 @@
   become_user: "{{ asdf_user }}"
 
 - name: "set global app versions"
-  command: "bash -lc 'source {{ asdf_script }} && asdf global {{ item.name }} {{ item.global | default(item.versions | difference(item.delete_versions|default([])) | sort | first) }}'"
+  shell:
+    source {{ asdf_script }} && asdf global {{ item.name }} {{ item.global | default(item.versions | difference(item.delete_versions|default([])) | sort | first) }}
+  args:
+    executable: bash
   when: item.versions is defined
   with_items: "{{ asdf_plugins }}"
   become: True
