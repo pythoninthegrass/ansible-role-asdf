@@ -28,7 +28,7 @@
     creates: "{{ asdf_dir }}/plugins/{{ item.name }}"
   with_items: "{{ asdf_plugins }}"
   when: asdf_plugins | length > 0
-  become: True
+  become: False
   become_user: "{{ asdf_user }}"
   ignore_errors: True
 
@@ -69,7 +69,7 @@
     - flags:
       skip_missing: True
   when: asdf_plugins | length > 0
-  become: True
+  become: False
   become_user: "{{ asdf_user }}"
 
 - name: "uninstall apps"
@@ -84,7 +84,7 @@
     - flags:
       skip_missing: True
   when: asdf_plugins | length > 0
-  become: True
+  become: False
   become_user: "{{ asdf_user }}"
 
 - name: "set global app versions"
@@ -94,7 +94,7 @@
     executable: bash
   when: item.versions is defined
   with_items: "{{ asdf_plugins }}"
-  become: True
+  become: False
   become_user: "{{ asdf_user }}"
 
 - name: "set asdfrc"
@@ -108,10 +108,10 @@
   become_user: "{{ asdf_user }}"
 
 - name: "set group permissions"
-  become: yes
   file:
     path: "{{ asdf_dir }}"
     owner: "{{ asdf_user }}"
     group: "{{ asdf_group }}"
     state: directory
     recurse: yes
+  become: True
