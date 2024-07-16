@@ -68,7 +68,7 @@
   become: True
   become_user: "{{ asdf_user }}"
 
-- name: "source asdf script"
+- name: "create asdf source script"
   template:
     src: "asdf.sh.j2"
     dest: "{{ asdf_script }}"
@@ -76,4 +76,21 @@
     group: "{{ asdf_group }}"
     mode: 0755
   become: True
+
+# TODO: test
+- name: "add asdf source script to shell configs"
+  ansible.builtin.lineinfile:
+    dest: "{{ home_dir }}/{{ item }}"
+    state: present
+    regexp: '^source {{ asdf_script }}$'
+    firstmatch: true
+    line: "source {{ asdf_script }}"
+    insertafter: EOF
+    backup: true
+  become: true
   become_user: "{{ asdf_user }}"
+  loop:
+    - .bashrc
+    - .zshrc
+  when: ansible_facts.user_shell is search(item | regex_replace('^\\.', ''))
+  tags: qa

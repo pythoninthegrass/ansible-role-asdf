@@ -1,13 +1,18 @@
 services:
   ansible-role-asdf:
-    container_name: asdf-role-ubuntu
-    image: asdf-role-ubuntu
+    container_name: ansible-role-debian
+    image: ansible-role-debian
     platform: linux/arm64/v8  # linux/amd64 / linux/arm64/v8
     tty: true                 # false for `entrypoint` in Dockerfile
     stdin_open: true          # false for `entrypoint` in Dockerfile
     build:
       context: .
       dockerfile: Dockerfile.debian12
+    environment:
+      - PLAYBOOK_FILE=python.yml
+      - PLUGIN_EXEC=python -V
+      - VERBOSE=True
     volumes:
       - "../:/ansible-role-asdf"
     working_dir: /ansible-role-asdf
+    command: ["sleep", "infinity"]

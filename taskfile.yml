@@ -94,7 +94,6 @@ tasks:
           ./tests/entrypoint.sh
     dir: "tests"
     env:
-      SERVICE: "asdf-role-ubuntu"
       PLAYBOOK_FILE: "python.yml"
       PLUGIN_EXEC: "python -V"
       VERBOSE: "True"
