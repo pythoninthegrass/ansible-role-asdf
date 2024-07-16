@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.2.0](https://github.com/pythoninthegrass/ansible-role-asdf/compare/v1.1.1...v1.2.0) (2024-07-16)
+
+
+### Features
+
+* add python plugin ([2af7466](https://github.com/pythoninthegrass/ansible-role-asdf/commit/2af74669b16425c17a626d215c2afb9cc4f84a32))
+
+
+### Bug Fixes
+
+* asdf script permissions ([8acffa8](https://github.com/pythoninthegrass/ansible-role-asdf/commit/8acffa8b9bcd08ca315b220380879901172ae444))
+* empty task args ([e6a2285](https://github.com/pythoninthegrass/ansible-role-asdf/commit/e6a2285997973178413c10e34d6a6c3bada75617))
+* install cache ([b8e5f09](https://github.com/pythoninthegrass/ansible-role-asdf/commit/b8e5f09887287fa0a2692979871db681709c687a))
+* privilege escalation ([5e0e95a](https://github.com/pythoninthegrass/ansible-role-asdf/commit/5e0e95a18f3712dc3e67e4a904aad910887114ee))
+* revert apt cache for subtasks (plugins) ([f9b9e33](https://github.com/pythoninthegrass/ansible-role-asdf/commit/f9b9e33ad21fd1330154fbf1644090a42ecb4538))
+
 ## [1.1.1](https://github.com/pythoninthegrass/ansible-role-asdf/compare/v1.1.0...v1.1.1) (2024-07-10)
 
 
